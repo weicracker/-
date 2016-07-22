@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="Generator" content="EditPlus®">
+		<meta name="Author" content="">
+		<meta name="Keywords" content="">
+		<meta name="Description" content="">
+		<title>别踩白块3.0</title>
+		<link rel="stylesheet" type="text/css" href="" /> 
+		<style>
+			*{margin:0px ;padding:0px;list-style:none;}
+			body{background:#d2d2d2;}
+			#box{width:400px;height:600px;margin:20px auto;position:relative;}
+			#ul1{height:600px;width:400px;border:2px solid #90f;position:relative;background:#f2f2f2;overflow:hidden;}
+			#ul1 li{height:148px;width:198px;position:absolute;line-height:148px;}
+			.li1{background:#90f;top:-150px;left:0px;border:0px;padding-right:4px;text-align:right;font:42px "微软雅黑";color:snow;}
+			.li2{background:#90f;top:-150px;right:0px;border:0px;text-align:left;font:42px "微软雅黑";color:snow;}
+			.li3{top:-150px;left:0px;border:1px solid #666;}	
+			.li4{top:-150px;right:0px;border:1px solid #666;}
+			#btn{width:400px;height:150px;z-index:10;position:absolute;border:0px;background:url("images/bg.jpg") repeat-x;color:#fff;font:42px "微软雅黑";}
+			#btn:hover{cursor:pointer;}
+			#btn:active{background:#012d6c;color:#e20;}
+			#fen{width:150px;height:50px;position:absolute;top:100px;left:-250px;background:#fff;line-height:50px;border:1px solid #333;font-family:"叶根友毛笔行书2.0版";font-size:20px;color:#f40;}
+			#spe{width:100px;height:34px;position:absolute;top:200px;left:-200px;background:#fff;line-height:34px;overflow:hidden;border:1px solid #333;}
+			#sel{height:30px;width:50px;margin-top:3px;float:right;}
+			#sp1{color:#f40;font-family:"叶根友毛笔行书2.0版";font-size:24px;}
+			#btn1{position:absolute;top:300px;left:-190px;}
+			#f5{height:30px;width:200px;position:absolute;top:370px;left:-290px;color:#f40;font-family:"叶根友毛笔行书2.0版";font-size:24px;}
+			#inner{width:396px;height:146px;position:absolute;top:450px;left:0px;border:2px dotted #fe0;z-index:100;display:none;}
+			#model{height:30px;width:200px;position:absolute;top:500px;left:-290px;}
+			#audio{height:30px;width:200px;position:absolute;top:200px;right:-290px;}
+			#ado{height:30px;width:80px;position:absolute;top:250px;right:-290px;}
+		</style>	
+	</head>
+	<body>
+		<div id = "box">
+			<ul id = "ul1">
+				<li class ="li1">GO GO</li>
+				<li class ="li2">GO !!!</li>
+				<input id = "btn" value = "开始" type= "button"/>
+				<div id="inner"></div>
+			</ul>
+			<div id = "spe">难度：
+				<select id = "sel" onchange = "onsel()">
+					<option value = "1">1</option>
+					<option value = "2">2</option>
+					<option value = "3">3</option>
+					<option value = "4">4</option>
+					<option value = "5">5</option>
+				</select>
+			</div>
+			<input type = "button" id = "btn1" value = "自动加速模式"/>
+			<div id = "fen">分值：<span id ="sp1"></span></div>
+			<input id="model" style="float:right;heigth:34px;" type = "button" value ="键盘外挂关" onclick = "model()">
+			<p id="f5">快捷键F5重新开始，操作方法：键盘左右按键或鼠标</p>
+			<audio id = "audio" controls="controls" loop = "loop" src="audio/1.mp3"></audio>
+			<select id = "ado" onchange = "audio()">
+					<option value = "0">音乐1</option>
+					<option value = "1">音乐2</option>
+					<option value = "2">音乐3</option>
+					<option value = "3">音乐4</option>
+					<option value = "4">音乐5</option>
+			</select>
+			<!-- 重新开始.weicracker//思考中。。。//发现BUG请联系企鹅：283400770本程序开发于2016.4.16日 -->
+		</div>
+	</body>
+	<script type="text/javascript">
+		var ul1 = document.getElementById("ul1");
+		var lis = ul1.getElementsByTagName("li");
+		var lev = -150;
+		var lev1 = -150;
+		var lev2 = -150;
+		var lev3 = -150;
+		var count = 0,cat = 0;
+		var flag=false;
+		var cl = 0;
+		var speed = 1;
+		//音乐
+		function audio(){
+			var arr=["1.mp3","2.mp3","3.mp3","4.mp3","5.mp3"];
+			var ado =Number(document.getElementById("ado").value);
+			//alert(ado)
+			var audio = document.getElementById("audio");
+			audio.src = "audio/"+arr[ado];
+		}
+		//alert(lis.length)
+		//键盘外挂开关
+		function model(){
+			var model = document.getElementById("model");
+			var inner = document.getElementById("inner");
+			if(inner.style.display=="block"){
+				inner.style.display="none";
+				model.value="键盘外挂关";
+			}else{
+				inner.style.display="block";
+				model.value="键盘外挂开";
+			}
+		}
+		//自由加速
+		function zSpeed(){
+			speed=speed+0.5;
+		}
+		var btn1 = document.getElementById("btn1");
+		btn1.onclick=function(){
+			alert("自动加速模式已启动，请点击开始游戏！")
+			setInterval('zSpeed()',20000)
+		}
+		//位移判断
+		function cMove(){
+		//alert(count+"cat="+cat)
+			
+			if(lis.length>=0){
+			lis[0].style.top = lev+"px";
+			lis[1].style.top = lev+"px";
+			lev+=speed;
+			}
+			if(lis.length>=4){
+			lis[2].style.top = lev1+"px";
+			lis[3].style.top = lev1+"px";
+			lev1+=speed;
+			}
+			if(lis.length>=6){
+			lis[4].style.top = lev2+"px";
+			lis[5].style.top = lev2+"px";
+			lev2+=speed;
+			}
+			if(lis.length>=8){
+			lis[6].style.top = lev3+"px";
+			lis[7].style.top = lev3+"px";
+			lev3+=speed;
+			}
+			//最难判断
+			for(var j=0;j<lis.length;j++){
+				//alert(lis[j].style.color)
+				//alert(typeof lis[j].style.top)
+				if(lis[0].style.color == "red"&&lev>=600||lis[1].style.color == "red"&&lev>=600){
+					clearInterval(cl);
+					alert("GAME OVER");
+					break;
+				}
+			}
+			//alert(lis.length)
+			//位置判断
+			for(var i = 0;i<lis.length;i++){	
+				if(lev>=600){
+					ul1.removeChild(lis[1]);
+					ul1.removeChild(lis[0]);
+					lev = 450;
+					//break;	
+				}
+				if(lev1>=450){
+					lev1 = 300;
+					//break;
+				}
+				if(lev2>=300){
+					lev2 = 150;
+					//break;
+				}
+				if(lev3>=150){
+					lev3 = 0;
+					//break;
+				}
+				//判断结果
+			}
+			//键盘判断新
+			document.onkeydown = function(ev){
+				var oEvent = ev||event;
+				if(oEvent.keyCode==37&&lis[0].style.color=="red"){
+					count++;
+					lis[0].style.background="#000";
+					lis[0].style.color = "blue";
+				}else if(oEvent.keyCode==37&&lis[0].style.color==""&&lis[0].innerHTML==""){
+					//alert(lis[0].style.color)
+					clearInterval(cl);
+					lis[0].style.background="#f30";
+					alert("GAME OVER")
+				}
+				if(oEvent.keyCode==39&&lis[1].style.color=="red"){
+					count++;
+					lis[1].style.background="#000";
+					lis[1].style.color = "blue";
+				}else if(oEvent.keyCode==39&&lis[1].style.color==""&&lis[1].innerHTML==""){
+					//alert(lis[1].style.color)
+					clearInterval(cl);
+					lis[1].style.background="#f30";
+					alert("GAME OVER")
+				}
+			}
+			
+			//生成新元素
+			if(lev==0||lev1==0||lev2==0||lev3==0){
+				var li2 = document.createElement("li");
+				var s1 = Math.floor(Math.random()*100);
+				li2.className = "li3";
+				if(s1%2==0){
+						li2.style.background="#fff";	
+						li2.onclick = function(){
+						li2.style.background="#f30";
+						clearInterval(cl);
+						alert("GAME OVER")
+						}
+					}else{
+						li2.style.background="#222";
+						li2.style.color = "red";
+						cat++;
+						li2.onclick = function(){
+							if(li2.style.color!="blue"){
+								count++;
+							}
+							li2.style.background="#000";
+							li2.style.color = "blue";
+						}
+						
+					}
+				ul1.appendChild(li2);
+				var li3 = document.createElement("li");
+				var s2 = Math.floor(Math.random()*100);
+				li3.className = "li4";	
+				if(s2%2==0){
+					li3.style.background="#fff";
+					li3.onclick = function(){
+						li3.style.background="#f30";
+						clearInterval(cl);
+						alert("GAME OVER")
+						}
+					}else{
+						li3.style.background="#222";
+						li3.style.color = "red";
+						cat++;
+						li3.onclick = function(){
+							if(li3.style.color!="blue"){
+								count++;
+							}
+							li3.style.color = "blue";
+							li3.style.background="#000";
+							//alert(li3.style.color)
+						}
+					}
+					ul1.appendChild(li3);
+			}
+			var sp1 = document.getElementById("sp1");
+			sp1.innerHTML = count*100;
+		}
+		//速度时间判断
+		var timer = 10;
+		var sel = document.getElementById("sel");
+		function onsel(){
+			speed = Number(sel.options[sel.selectedIndex].value);
+			//alert(timer)
+		}
+		var btn = document.getElementById("btn");
+		btn.onclick = function(){	
+			if(btn.value=="开始"){
+			cl = setInterval('cMove()',timer);
+			//setInterval('tm()',20)
+			btn.value = "暂停";
+			}else{
+			clearInterval(cl);
+			btn.value = "开始";
+			}
+		}
+	//重新开始.weicracker//思考中。。。//本程序开发于2016.4.16日
+	</script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
